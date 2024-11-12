@@ -1,23 +1,49 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
 
-
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body{
+body {
     font-family: 'Poppins', sans-serif;
 }
 
-.menu{
-    background-color: #1A202C;
+.menu {
+    background-color: #009aac;
     color: #fff;
     height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 10; /* Asegura que el menú esté por encima del contenido */
 }
 
-.menu__container{
+/* Logo del hospital */
+.menu__logo {
+    position: relative;
+    display: inline-block;
+    padding: 10px; /* Espaciado alrededor del logo en pantallas grandes */
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    /* Tamaño real del logo como estaba en el código original */
+    width: 250px; /* Tamaño fijo del logo en pantallas grandes */
+    height: auto; /* Ajuste de altura proporcional */
+    transition: width 0.3s ease; /* Transición suave para el ancho */
+}
+
+.menu__logo img {
+    display: block;
+    width: 100%; /* El logo ocupa el 100% del contenedor */
+    height: auto; /* Mantiene la proporción del logo */
+}
+
+/* Contenedor del menú */
+.menu__container {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -27,26 +53,23 @@ body{
     margin: 0 auto;
 }
 
-.menu__links{
+/* Enlaces del menú */
+.menu__links {
     height: 100%;
-    transition: transform .5s;
+    transition: transform 0.5s;
     display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Alinea los enlaces al final */
 }
 
-.menu__item{
+.menu__item {
     list-style: none;
     position: relative;
     height: 100%;
-    --clip: polygon(0 0, 100% 0, 100% 0, 0 0);
-    --transform: rotate(-90deg);
 }
 
-.menu__item:hover{
-    --clip: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-    --transform: rotate(0);
-}
-
-.menu__link{
+/* Estilos del enlace */
+.menu__link {
     color: #fff;
     text-decoration: none;
     padding: 0 30px;
@@ -55,39 +78,45 @@ body{
     align-items: center;
 }
 
-.menu__link:hover{
+.menu__link:hover {
     background-color: #5e7094;
 }
 
-
-.menu__arrow{
-    transform: var(--transform);
-    transition: transform .3s;
+/* Estilos de la flecha */
+.menu__arrow {
+    transform: rotate(-90deg);
+    transition: transform 0.3s;
     display: block;
     margin-left: 3px;
 }
 
-.menu__nesting{
+/* Submenú (menu__nesting) */
+.menu__nesting {
     list-style: none;
-    transition:clip-path .3s;
-    clip-path: var(--clip);
     position: absolute;
     right: 0;
-    bottom: 0;
-    width: max-content;
-    transform: translateY(100%);
-    background-color: #000;
+    top: 100%; /* Coloca el submenú justo debajo del elemento padre */
+    background-color: #009aac;
+    display: none; /* Los submenús están ocultos por defecto */
+    width: 200px; /* Ajusta el ancho según lo necesites */
+    z-index: 5; /* Asegura que el submenú se muestre encima de otros elementos */
 }
 
-.menu__link--inside{
+/* Mostrar submenú cuando se hace hover */
+.menu__item:hover .menu__nesting {
+    display: block;
+}
+
+.menu__link--inside {
     padding: 30px 100px 30px 20px;
 }
 
-.menu__link--inside:hover{
+.menu__link--inside:hover {
     background-color: #798499;
 }
 
-.menu__hamburguer{
+/* Menú hamburguesa (pantallas pequeñas) */
+.menu__hamburguer {
     height: 100%;
     display: flex;
     align-items: center;
@@ -96,62 +125,61 @@ body{
     display: none;
 }
 
-.menu__img{
+.menu__img {
     display: block;
     width: 36px;
 }
 
-@media (max-width:800px){
-    .menu__hamburguer{
+/* Media Query para pantallas pequeñas */
+@media (max-width: 800px) {
+    .menu__hamburguer {
         display: flex;
     }
 
-    .menu__item{
-        --clip:0;
-        overflow:hidden ;
+    .menu__item {
+        --clip: 0;
+        overflow: hidden;
     }
 
-    .menu__item--active{
+    .menu__item--active {
         --transform: rotate(0);
         --background: #5e7094;
     }
 
-    .menu__item--show{
+    .menu__item--show {
         background-color: var(--background);
     }
 
-
-    .menu__links{
+    .menu__links {
         position: fixed;
-        max-width: 400px;
+        top: 70px; /* Deja espacio para el logo */
+        left: 0;
         width: 100%;
-        top: 70px;
-        bottom: 0;
-        right: 0;
-        background-color: #000;
+        height: 100%;
+        background-color: #009aac;
         overflow-y: auto;
         display: grid;
         grid-auto-rows: max-content;
         transform: translateX(100%);
     }
 
-    .menu__links--show{
+    .menu__links--show {
         transform: unset;
         width: 100%;
     }
 
-    .menu__link{
+    .menu__link {
         padding: 25px 0;
         padding-left: 30px;
         height: auto;
     }
 
-    .menu__arrow{
+    .menu__arrow {
         margin-left: auto;
         margin-right: 20px;
     }
 
-    .menu__nesting{
+    .menu__nesting {
         display: grid;
         position: unset;
         width: 100%;
@@ -160,9 +188,20 @@ body{
         transition: height .3s;
     }
 
-    .menu__link--inside{
+    .menu__link--inside {
         width: 90%;
         margin-left: auto;
         border-left: 1px solid #798499;
+    }
+
+    /* Aquí es donde se hace el ajuste del logo en pantallas pequeñas */
+    .menu__logo {
+        width: 100%; /* El logo ocupa el 100% del ancho disponible en pantallas pequeñas */
+        max-width: none; /* Elimina el límite de ancho */
+        padding: 0; /* Elimina el padding alrededor del logo */
+        border-radius: 2; /* Elimina el borde redondeado */
+        box-shadow: none; /* Elimina la sombra */
+        padding: 2px;
+        transition: width 0.3s ease; /* Transición suave cuando cambia el tamaño */
     }
 }
