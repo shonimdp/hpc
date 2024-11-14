@@ -4,41 +4,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu desplegable</title>
+    <title>Lavadero - Datos</title>
     <link rel="stylesheet" href="css/estilos.css">
     <style>
-        /* Estilos para el menú */
-        nav {
-            background-color: #333;
-            color: #fff;
+        /* Estilos para la sección del iframe de Google Sheets */
+        .cuadrado {
+            width: 100%;
+            height: 80vh; /* 80% de la altura de la pantalla */
+            border: 2px solid #000;
             padding: 10px;
+            overflow-y: auto;
+            margin: 20px 0;
         }
 
-        .menu__container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .menu__links {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .menu__item {
-            display: inline-block;
-            margin: 10px;
-        }
-
-        .menu__link {
-            color: white;
-            text-decoration: none;
-            font-size: 16px;
-        }
-
-        .menu__arrow {
-            width: 10px;
-            margin-left: 5px;
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
     </style>
 </head>
@@ -51,7 +33,7 @@
 
             <ul class="menu__links">
                 <li class="menu__item">
-                    <a href="login.html" class="menu__link">Inicio</a>
+                    <a href="index.html" class="menu__link">Inicio</a>
                 </li>
     
                 <li class="menu__item menu__item--show">
@@ -85,7 +67,7 @@
                 </li>
     
                 <li class="menu__item">
-                    <a href="lavadero.html" class="menu__link">Lavadero</a> <!-- Enlace a la página lavadero.html -->
+                    <a href="lavadero.html" class="menu__link">Lavadero</a> <!-- Mantener enlace Lavadero -->
                 </li>
             </ul>
 
@@ -94,6 +76,14 @@
             </div>
         </section>
     </nav>
+
+    <section>
+        <h2>Horarios de Ingreso y egreso del uniforme a Lavadero</h2>
+        <div class="cuadrado" id="contenido">
+            <!-- Aquí se inserta el iframe con los datos de Google Sheets -->
+            <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSfH3whxA4yc_rxrHV5xS3x3GAo7_vNjHB3Hp9f2EjpmdVnasWGogJi6fQVUjGBp01wp7EtivSK7IxW/pubhtml?gid=2128010177&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+        </div>
+    </section>
 
     <script src="js/app.js"></script>
 </body>
