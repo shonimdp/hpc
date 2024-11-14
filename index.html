@@ -106,8 +106,7 @@
         function mostrarDatos() {
             // URL para acceder a los datos de la hoja con el nombre de la hoja "Registro"
             var queryString = encodeURIComponent('SELECT * FROM Registro');  // Aquí se hace la consulta
-            var url = `https://docs.google.com/spreadsheets/d/e/2PACX-1vSfH3whxA4yc_rxrHV5xS3x3GAo7_vNjHB3Hp9f2EjpmdVnasWGogJi6fQVUjGBp01wp7EtivSK7IxW/gviz/tq?tq=${queryString}&sheet=Registro`;
-
+            var url = `https://docs.google.com/spreadsheets/d/e/2PACX-1vSfH3whxA4yc_rxrHV5xS3x3GAo7_vNjHB3Hp9f2EjpmdVnasWGogJi6fQVUjGBp01wp7EtivSK7IxW/pub?output=csv&gid=2128010177`;
             var query = new google.visualization.Query(url);
             query.send(function(response) {
                 if (response.isError()) {
