@@ -1,116 +1,130 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formulario de Login</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #f0f0f0;
-    }
-    .login-container {
-      background-color: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-    h2 {
-      text-align: center;
-    }
-    .input-group {
-      margin-bottom: 15px;
-    }
-    .input-group label {
-      display: block;
-      font-weight: bold;
-    }
-    .input-group input {
-      width: 100%;
-      padding: 8px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    .submit-btn {
-      width: 100%;
-      padding: 10px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .submit-btn:hover {
-      background-color: #45a049;
-    }
-    .error {
-      color: red;
-      text-align: center;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Privado de la Comunidad - Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <style>
+        nav {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+        }
+        .menu__container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .menu__links {
+            list-style-type: none;
+            padding: 0;
+        }
+        .menu__item {
+            display: inline-block;
+            margin: 10px;
+        }
+        .menu__link {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .menu__arrow {
+            width: 10px;
+            margin-left: 5px;
+        }
+        .form-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .form-container input {
+            margin-bottom: 15px;
+        }
+        .alert {
+            display: none;
+        }
+    </style>
 </head>
 <body>
+    <!-- Menú de navegación -->
+    <nav class="menu">
+        <section class="menu__container">
+            <h1 class="menu__logo">
+                <a href="index.html">
+                    <img src="imagenes/hpc-logotype.svg" alt="Logo del Hospital">
+                </a>
+            </h1>
+            <ul class="menu__links">
+                <li class="menu__item">
+                    <a href="login.html" class="menu__link">Inicio</a>
+                </li>
+                <li class="menu__item">
+                    <a href="lavadero.html" class="menu__link">Lavadero</a>
+                </li>
+            </ul>
+        </section>
+    </nav>
 
-  <div class="login-container">
-    <h2>Iniciar sesión</h2>
-    <form id="loginForm">
-      <div class="input-group">
-        <label for="username">Usuario:</label>
-        <input type="text" id="username" name="username" required>
-      </div>
-      <div class="input-group">
-        <label for="password">Contraseña:</label>
-        <input type="password" id="password" name="password" required>
-      </div>
-      <button type="submit" class="submit-btn">Iniciar sesión</button>
-      <div id="error-message" class="error"></div>
-    </form>
-  </div>
+    <!-- Formulario de Login -->
+    <div class="form-container">
+        <h3 class="text-center">Inicio de sesión</h3>
+        <div id="error" class="alert alert-danger" role="alert" style="font-size: 1.2em;"></div>
+        <form id="loginForm">
+            <div class="mb-3">
+                <label for="legajo" class="form-label">Número de Legajo</label>
+                <input type="text" class="form-control" id="legajo" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
+        </form>
+    </div>
 
-  <script>
-    const form = document.getElementById('loginForm');
-    const errorMessage = document.getElementById('error-message');
-    const scriptUrl = 'https://script.google.com/macros/s/AKfycbwuqIUydjTuwYyTwVX5NFsgHm3ejspx58oPu2JG3Tm3VvAU6yiHN17zZahrcM5Wg2ePww/exec';  // URL del Google Apps Script
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Función para validar el login
+        document.getElementById("loginForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            
+            var legajo = document.getElementById("legajo").value;
+            var password = document.getElementById("password").value;
 
-    form.addEventListener('submit', function(event) {
-      event.preventDefault();
+            // Mostrar mensaje de carga
+            var errorMessage = document.getElementById("error");
+            errorMessage.style.display = 'none';
 
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
+            if (!legajo || !password) {
+                errorMessage.innerHTML = '<i class="bi bi-exclamation-circle-fill"></i> Por favor, ingresa tu número de legajo y contraseña.';
+                errorMessage.style.display = 'block';
+                return;
+            }
 
-      // Limpiar mensaje de error
-      errorMessage.textContent = '';
-
-      // Realizar la solicitud POST al Google Apps Script
-      fetch(scriptUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username: username, password: password }),
-      })
-      .then(response => response.text())  // Obtener respuesta en texto
-      .then(data => {
-        if (data.trim() === 'success') {
-          window.location.href = '/home';  // Redirigir a la página principal
-        } else if (data.trim() === 'error') {
-          errorMessage.textContent = 'Usuario o contraseña incorrectos.';
-        } else {
-          errorMessage.textContent = 'Respuesta inesperada del servidor.';
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        errorMessage.textContent = 'Hubo un error al procesar la solicitud.';
-      });
-    });
-  </script>
-
+            // Verificar credenciales con Google Apps Script
+            google.script.run
+                .withSuccessHandler(function(response) {
+                    if (response === "success") {
+                        // Redirigir a la página principal o al dashboard
+                        window.location.href = "index.html";
+                    } else {
+                        errorMessage.innerHTML = '<i class="bi bi-exclamation-circle-fill"></i> Credenciales incorrectas. Intenta nuevamente.';
+                        errorMessage.style.display = 'block';
+                    }
+                })
+                .withFailureHandler(function(err) {
+                    errorMessage.innerHTML = '<i class="bi bi-exclamation-circle-fill"></i> Se ha producido un error. Intenta más tarde.';
+                    errorMessage.style.display = 'block';
+                })
+                .checkLogin(legajo, password);
+        });
+    </script>
 </body>
 </html>
