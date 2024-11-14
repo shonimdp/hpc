@@ -109,21 +109,27 @@
             }
 
             // Verificar credenciales con Google Apps Script
-            google.script.run
-                .withSuccessHandler(function(response) {
-                    if (response === "success") {
-                        // Redirigir a la página principal o al dashboard
-                        window.location.href = "index.html";
-                    } else {
-                        errorMessage.innerHTML = '<i class="bi bi-exclamation-circle-fill"></i> Credenciales incorrectas. Intenta nuevamente.';
-                        errorMessage.style.display = 'block';
-                    }
-                })
-                .withFailureHandler(function(err) {
-                    errorMessage.innerHTML = '<i class="bi bi-exclamation-circle-fill"></i> Se ha producido un error. Intenta más tarde.';
+            fetch('https://script.google.com/macros/s/YOUR_SCRIPT_URL/exec', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ legajo: legajo, password: password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Redirigir a la página principal o al dashboard
+                    window.location.href = "index.html";
+                } else {
+                    errorMessage.innerHTML = '<i class="bi bi-exclamation-circle-fill"></i> Credenciales incorrectas. Intenta nuevamente.';
                     errorMessage.style.display = 'block';
-                })
-                .checkLogin(legajo, password);
+                }
+            })
+            .catch(error => {
+                errorMessage.innerHTML = '<i class="bi bi-exclamation-circle-fill"></i> Se ha producido un error. Intenta más tarde.';
+                errorMessage.style.display = 'block';
+            });
         });
     </script>
 </body>
